@@ -17,10 +17,39 @@ Eidos is the machine reading system developed by the CLU lab at University of Ar
 
 ### HUME
 
-- Repository: 
-- License: 
-- Documentation: 
-- Stable version: 
+Hume is BBN's machine reading system that extracts CAGs and supports the OIAD clustering. It leverages the following software
+- Repository: https://github.com/BBN-E/Hume
+- License: Apache
+- Documentation: TODO
+- Stable version: TODO 
+- Versions available on Maven Central:
+
+Text-Open contains Java and Python APIs for reading and writing BBN's SerifXML format, which is BBN's internal representation of documents and information.
+- Repository: https://github.com/BBN-E/text-open
+- License: Apache
+- Documentation: TODO
+- Stable version: TODO
+- Versions available on Maven Central:
+
+LearnIt is a tool for customizing Machine Readers (a.k.a., Information Extraction algorithms) with human in the loop. Within WM, we also use it as a pattern-based extractor for event extraction.
+- Repository: https://github.com/BBN-E/LearnIt
+- License: Apache
+- Documentation: TODO
+- Stable version: TODO
+- Versions available on Maven Central:
+
+NLPLingo is BBN's Deep Learning toolkit for event extraction and causal relation extraction.
+- Repository: https://github.com/BBN-E/nlplingo
+- License: Apache
+- Documentation: TODO
+- Stable version: TODO
+- Versions available on Maven Central:
+
+CSerif contains C/C++ code for pre-reading of texts into BBN's SerifXML format. We are working on open sourcing this.
+- Repository: TODO
+- License: TODO
+- Documentation: TODO
+- Stable version: TODO
 - Versions available on Maven Central:
 
 ### Sofia
