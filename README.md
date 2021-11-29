@@ -17,3 +17,4 @@ Eidos is the machine reading system developed by the CLU lab at University of Ar
 
 ## Ontology
 
+The reading and assembly software developed under World Modelers program share the same underlying ontology. The ontology is available in this repository: https://github.com/WorldModelers/Ontologies. Please see the project's [README](https://github.com/WorldModelers/Ontologies/blob/master/README.md) for details about the JSON format that the ontology uses, and usage information.
