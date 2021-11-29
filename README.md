@@ -1,2 +1,2 @@
 # WorldModelers
-General information about the WorldModelers repo
+General information about the WorldModelers repos
