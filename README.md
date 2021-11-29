@@ -7,13 +7,26 @@ This section describes the machine reading and assembly repositories.
 
 ### Eidos
 
-Eidos is the machine reading system developed by the CLU lab at University of Arizona. This repository includes both reading software as well as the concept identification component, which is used by the ontology-in-a-day (OIAD) system.
+Eidos is the machine reading system developed by the CLU lab at University of Arizona. This repository includes the reading software as well as code for integrating with DART.
 
 - Repository: https://github.com/clulab/eidos
 - License: While we will soon be licensed as Apache, currently one dependency has a GPL license. This will be removed very soon and the license will be updated.
 - Documentation: https://github.com/clulab/eidos/wiki
-- Stable version: TODO Keith
-- Versions available on Maven Central: yes
+- Stable version: https://github.com/clulab/eidos/releases/tag/julyEmbedBYOD is the most recent version used "in production".
+- Versions available on Maven Central:
+  - Older versions are at https://mvnrepository.com/artifact/org.clulab/eidos.
+  - Newer versions are at http://artifactory.cs.arizona.edu:8081/artifactory/webapp/#/artifacts/browse/tree/General/sbt-release/org/clulab/eidos_2.12.
+  - This arrangement will be updated soon.
+
+### Concept Discovery
+
+This is the concept identification component, which is used by the ontology-in-a-day (OIAD) system.
+
+- Repository: https://github.com/clulab/conceptdiscovery/
+- License: 
+- Documentation: https://github.com/clulab/conceptdiscovery/#readme
+- Stable version: 
+- Versions available on Maven Central: not yet
 
 ### HUME
 
