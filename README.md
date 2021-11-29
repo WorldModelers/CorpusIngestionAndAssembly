@@ -15,6 +15,30 @@ Eidos is the machine reading system developed by the CLU lab at University of Ar
 - Stable version: TODO Keith
 - Versions available on Maven Central: yes
 
+### HUME
+
+- Repository: 
+- License: 
+- Documentation: 
+- Stable version: 
+- Versions available on Maven Central:
+
+### Sofia
+
+- Repository: 
+- License: 
+- Documentation: 
+- Stable version: 
+- Versions available on Maven Central:
+
+### INDRA
+
+- Repository: 
+- License: 
+- Documentation: 
+- Stable version: 
+- Versions available on Maven Central:
+
 ## Ontology
 
 The reading and assembly software developed under World Modelers program share the same underlying ontology. The ontology is available in this repository: https://github.com/WorldModelers/Ontologies. Please see the project's [README](https://github.com/WorldModelers/Ontologies/blob/master/README.md) for details about the JSON format that the ontology uses, and usage information.
