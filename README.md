@@ -1,5 +1,5 @@
-# WorldModelers
-General information about the WorldModelers repos
+# Corpus Ingestion and Assembly
+General information about the WorldModelers repos related to reading and assembly
 
 ## Reading and Assembly Software Components
 
