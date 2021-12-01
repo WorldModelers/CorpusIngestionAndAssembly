@@ -73,13 +73,12 @@ CSerif contains C/C++ code for pre-reading of texts into BBN's SerifXML format. 
 - Stable version: 
 - Versions available on Maven Central:
 
-### INDRA
+### INDRA World
 
-- Repository: 
-- License: 
-- Documentation: 
-- Stable version: 
-- Versions available on Maven Central:
+- Repository: https://github.com/indralab/indra_world
+- License: BSD 2-Clause License
+- Documentation: https://indra-world.readthedocs.io/en/latest/
+- Stable version: https://github.com/indralab/indra_world/releases/tag/june_2021_embed
 
 ## Ontology
 
