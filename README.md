@@ -25,8 +25,8 @@ This is the concept identification component, which is used by the ontology-in-a
 - Repository: https://github.com/clulab/conceptdiscovery/
 - License: 
 - Documentation: https://github.com/clulab/conceptdiscovery/#readme
-- Stable version: 
-- Versions available on Maven Central: not yet
+- Stable version: https://github.com/clulab/conceptdiscovery/releases/tag/v0.2.0
+- Versions available on Maven Central: https://mvnrepository.com/artifact/org.clulab/conceptdiscovery
 
 ### HUME
 
