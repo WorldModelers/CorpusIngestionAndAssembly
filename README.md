@@ -67,11 +67,11 @@ CSerif contains C/C++ code for pre-reading of texts into BBN's SerifXML format. 
 
 ### Sofia
 
-- Repository: 
-- License: 
-- Documentation: 
-- Stable version: 
-- Versions available on Maven Central:
+- Repository: https://github.com/spilioeve/WM-src
+- License: MIT License
+- Documentation: https://github.com/spilioeve/WM-src/blob/master/README.md
+- Stable version: https://github.com/spilioeve/WM-src
+- Versions available on Maven Central: N/A
 
 ### INDRA World
 
