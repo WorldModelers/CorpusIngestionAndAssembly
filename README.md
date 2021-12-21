@@ -11,12 +11,9 @@ Eidos is the machine reading system developed by the CLU lab at University of Ar
 
 - Repository: https://github.com/clulab/eidos
 - License: While we will soon be licensed as Apache, currently one dependency has a GPL license. This will be removed very soon and the license will be updated.
-- Documentation: https://github.com/clulab/eidos/wiki
-- Stable version: https://github.com/clulab/eidos/releases/tag/julyEmbedBYOD is the most recent version used "in production".
-- Versions available on Maven Central:
-  - Older versions are at https://mvnrepository.com/artifact/org.clulab/eidos.
-  - Newer versions are at http://artifactory.cs.arizona.edu:8081/artifactory/webapp/#/artifacts/browse/tree/General/sbt-release/org/clulab/eidos_2.12.
-  - This arrangement will be updated soon.
+- Documentation: https://github.com/clulab/eidos/wiki, https://github.com/clulab/eidos#readme
+- Stable version: https://github.com/clulab/eidos/releases/tag/latest
+- Versions available on Maven Central: https://mvnrepository.com/artifact/org.clulab/eidos
 
 ### Concept Discovery
 
@@ -25,7 +22,7 @@ This is the concept identification component, which is used by the ontology-in-a
 - Repository: https://github.com/clulab/conceptdiscovery/
 - License: 
 - Documentation: https://github.com/clulab/conceptdiscovery/#readme
-- Stable version: https://github.com/clulab/conceptdiscovery/releases/tag/v0.2.0
+- Stable version: https://github.com/clulab/conceptdiscovery/releases/tag/latest
 - Versions available on Maven Central: https://mvnrepository.com/artifact/org.clulab/conceptdiscovery
 
 ### HUME
