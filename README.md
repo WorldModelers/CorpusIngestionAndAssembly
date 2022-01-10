@@ -79,4 +79,10 @@ CSerif contains C/C++ code for pre-reading of texts into BBN's SerifXML format. 
 
 ## Ontology
 
-The reading and assembly software developed under World Modelers program share the same underlying ontology. The ontology is available in this repository: https://github.com/WorldModelers/Ontologies. Please see the project's [README](https://github.com/WorldModelers/Ontologies/blob/master/README.md) for details about the JSON format that the ontology uses, and usage information.
+The reading and assembly software developed under World Modelers program share the same underlying ontology.
+
+- Repository: https://github.com/WorldModelers/Ontologies
+- License: 
+- Documentation: https://github.com/WorldModelers/Ontologies/blob/master/README.md
+- Stable version: https://github.com/WorldModelers/Ontologies/tags/latest
+- Versions available on Maven Central: 
