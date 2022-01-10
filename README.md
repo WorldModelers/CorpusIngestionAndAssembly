@@ -56,10 +56,10 @@ NLPLingo is BBN's Deep Learning toolkit for event extraction and causal relation
 - Versions available on Maven Central:
 
 CSerif contains C/C++ code for pre-reading of texts into BBN's SerifXML format. We are working on open sourcing this.
-- Repository: TODO
-- License: TODO
-- Documentation: TODO
-- Stable version: TODO
+- Repository: https://github.com/BBN-E/serif
+- License: Apache https://github.com/BBN-E/serif/blob/master/LICENSE
+- Documentation: https://github.com/BBN-E/serif/blob/master/README.md
+- Stable version: https://github.com/BBN-E/serif
 - Versions available on Maven Central:
 
 ### Sofia
