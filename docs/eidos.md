@@ -5,7 +5,7 @@ nav_order: 4
 ---
 # Eidos
 
-Eidos is the machine reading system developed by the CLU lab at University of Arizona. This repository includes the reading software as well as code for integrating with DART.
+Eidos is the machine reading system developed by the CLU lab at University of Arizona.
 
 ## Workflows
 
