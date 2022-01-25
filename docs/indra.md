@@ -1,7 +1,7 @@
 ---
 title: INDRA
 has_children: false
-nav_order: 1
+nav_order: 6
 ---
 # INDRA
 

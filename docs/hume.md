@@ -1,7 +1,7 @@
 ---
 title: HUME
 has_children: false
-nav_order: 1
+nav_order: 5
 ---
 # HUME
 
