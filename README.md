@@ -1,6 +1,8 @@
 # Corpus Ingestion and Assembly
 General information about the WorldModelers repos related to reading and assembly
 
+Additional documentation is available at the [website](https://worldmodelers.com/CorpusIngestionAndAssembly/) for this repo.
+
 ## Reading and Assembly Software Components
 
 This section describes the machine reading and assembly repositories.
