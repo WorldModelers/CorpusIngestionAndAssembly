@@ -93,4 +93,4 @@ The reading and assembly software developed under World Modelers program share t
   - Code: https://github.com/WorldModelers/Ontologies/blob/master/common/src/main/resources/LICENSE.txt
 - Documentation: https://github.com/WorldModelers/Ontologies/blob/master/README.md
 - Stable version: https://github.com/WorldModelers/Ontologies/tags/latest
-- Versions available on Maven Central: 
+- Versions available on Maven Central: N/A
