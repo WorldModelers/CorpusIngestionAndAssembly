@@ -31,6 +31,24 @@ and Indra, either locally or in a cloud environment. Documentation for deploymen
 The following workflow will depend on the DART command line interface (DART CLI), which must be configured 
 according to your deployment. Instructions for installing, configuring, and using DART CLI [can be found here](???).
 
+### Annotators
+
+In addition to content extraction, the DART document ingestion workflow also has the ability to execute a series of annotators for attaching extra NLP metadata to the document extractions. The annotators that are executed during this workflow should be fast running services for common NLP pre-processing tasks such as Named Entity Recognition, Event Detection, and Topic Category Labeling. Long running processes and other types of deep reading should not be implemented as annotators, but rather, as a downstream service similar to the Readers. The output of the annotators is appended to the CDR document data and surfaced in the [Corpus Exploration (CorpEx)](???) user interface to aid in _Corpus Development_. In addition, the data in the annotations is available via the [CDR Retrieval API](???) and can be leveraged by other systems instead of implementing their own custom pre-processing tasks.
+
+The majority of the annotators are optional, and the World Modelers document processing pipeline can be configured to omit them in order to reduce compute resources or processing time. The one exception is the *Qntfy Key Sentence* annotator, which is required as an input to the clustering algorithm that kicks off the "Ontology in a Day" workflow.
+
+In addition to the annotators that are included with the DART open source project, it is also possible to implement your own annotator. They can be implemented in whatever technology backend you wish as long as the service conforms to the [CDR Annotator REST API spec](???). Documentation about the different annotation formats can be found in the [CDR Document Schema](???). New annotators can be integrated to the DART pipeline by adding an entry in the [configuration file](???) for the Document Ingestion Pipeline.
+
+The following is the list of annotators that are available with the open source DART project.
+| Name                  | Project                                                                     | Description                                       |
+|-----------------------|-----------------------------------------------------------------------------|---------------------------------------------------|
+| Qntfy NER             | [qntfy-ner](https://github.com/twosixlabs-dart/qntfy-ner)                   | Named Entity Recognition developed by Qntfy       |
+| Qntfy Event Detection | [qntfy-events](https://github.com/twosixlabs-dart/qntfy-events)             | Special Named Entity Recognition model for events |
+| Qntfy Categories      | [qntfy-categories](https://github.com/twosixlabs-dart/qntfy-categories)     | PMESII topic labels                               |
+| Qntfy Key Sentence    | [qntfy-key-sentence](https://github.com/twosixlabs-dart/qntfy-key-sentence) | Extracts most salient sentences from a document   |
+
+
+
 #### Tenant Management
 
 Prior to submitting documents, the program  manager should decide whether the intended use case demands any 
