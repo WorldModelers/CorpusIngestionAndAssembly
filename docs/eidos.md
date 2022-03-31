@@ -7,7 +7,7 @@ nav_order: 4
 
 [Eidos](https://github.com/clulab/eidos) is the machine reading system developed by the [CLU Lab](http://clulab.org) at the University of Arizona for the [World Modelers](https://www.darpa.mil/program/world-modelers) (WM) program.  It extracts entities (e.g, "food security"), arguments (increase, decrease, quantification, etc.), events (most significantly, directed, causal events like "Food insecurity causes increased migration."), and grounds them to [ontologies](https://github.com/WorldModelers/Ontologies) developed for the program.  It integrates with other tools described on these pages and is typically incorporated into the workflows documented below.
 
-In general one should keep in mind that Eidos is written in Scala and will run with the Scala Build Tool, [sbt](https://www.scala-sbt.org/), with the [Scala interpreter](https://www.scala-lang.org/download/install.html), or directly on the `Java` virtual machine (JVM), depending on how it has been packaged.  There is also a REST API, and it can be containerized.  For workflow W1, `sbt` has been chosen as the most appropriate tool and for W3 it is a [Docker](https://www.docker.com/) container running several instances of `Java`.  The image for the container can be downloaded from [Docker hub](https://hub.docker.com/r/clulab/eidos-dart/tags) or built locally with `sbt`.
+In general one should keep in mind that Eidos is written in Scala and will run with the Scala Build Tool, [sbt](https://www.scala-sbt.org/), with the [Scala interpreter](https://www.scala-lang.org/download/install.html), or directly on the `Java` virtual machine (JVM), depending on how it has been packaged.  There is also a REST API, and it can be containerized.  For workflow W1, `sbt` has been chosen as the most appropriate tool and for W3 it is a [Docker](https://www.docker.com/) container running several instances of `Java`.  The image for the container can be downloaded from [Docker hub](https://hub.docker.com/r/clulab/eidos-dart) or built locally with `sbt`.
 
 ## Workflows
 
@@ -56,7 +56,7 @@ This pipeline is implemented as four independent, asynchronous processes, which 
 $ cd ./wmexchanger
 $ export EIDOS_PASSWORD=<EidosPassword>
 $ source ./export.sh
-$ docker-compose -f ./docker-compose-eidos2.yml
+$ docker-compose -f ./docker-compose-eidos2.yml up
 ```
 * Here \<EidosPassword\> is whatever password is needed for Eidos to access the DART component.
 * The file `export.sh` can be [downloaded](https://raw.githubusercontent.com/clulab/eidos/master/wmexchanger/export.sh) or copied from this abbreviated version:
@@ -102,7 +102,7 @@ $ docker-compose -f ./docker-compose-eidos2.yml
       readers-net:
     ```
 
-The image, [clulab/eidos-dart](), has been uploaded to `dockerhub` and should be automatically accessible to `docker-compose`.  It can be customized and rebuilt locally with any necessary changes.  The current image was build with these [instructions](https://github.com/clulab/eidos/tree/master/wmexchanger/Docker):
+The image, [clulab/eidos-dart](https://hub.docker.com/r/clulab/eidos-dart), has been uploaded to `dockerhub` and should be automatically accessible to `docker-compose`.  It can be customized and rebuilt locally with any necessary changes.  The current image was build with these [instructions](https://github.com/clulab/eidos/tree/master/wmexchanger/Docker):
 
 ```shell
 $ sbt "project wmexchanger" "dist"
