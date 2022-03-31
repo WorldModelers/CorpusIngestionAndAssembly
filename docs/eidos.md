@@ -7,29 +7,33 @@ nav_order: 4
 
 [Eidos](https://github.com/clulab/eidos) is the machine reading system developed by the [CLU Lab](http://clulab.org) at the University of Arizona for the [World Modelers](https://www.darpa.mil/program/world-modelers) (WM) program.  It extracts entities (e.g, "food security"), arguments (increase, decrease, quantification, etc.), events (most significantly, directed, causal events like "Food insecurity causes increased migration."), and grounds them to [ontologies](https://github.com/WorldModelers/Ontologies) developed for the program.  It integrates with other tools described on these pages and is typically incorporated into the workflows documented below.
 
-In general one should keep in mind that Eidos is written in Scala and will run with the Scala Build Tool, [sbt](https://www.scala-sbt.org/), with the [Scala interpreter](https://www.scala-lang.org/download/install.html), or with just the Java virtual machine (JVM), depending on how it has been packaged.  There is also a REST API, and it can be containerized.  For workflow W1, `sbt` has been chosen as the most appropriate tool and for W3 it is a [Docker](https://www.docker.com/) container running several instances of Java.  The image for the container can be built with `sbt` or downloaded from [Docker hub](https://hub.docker.com/r/clulab/eidos-dart/tags).
+In general one should keep in mind that Eidos is written in Scala and will run with the Scala Build Tool, [sbt](https://www.scala-sbt.org/), with the [Scala interpreter](https://www.scala-lang.org/download/install.html), or directly on the `Java` virtual machine (JVM), depending on how it has been packaged.  There is also a REST API, and it can be containerized.  For workflow W1, `sbt` has been chosen as the most appropriate tool and for W3 it is a [Docker](https://www.docker.com/) container running several instances of `Java`.  The image for the container can be downloaded from [Docker hub](https://hub.docker.com/r/clulab/eidos-dart/tags) or built locally with `sbt`.
 
 ## Workflows
 
 <a id="w1"></a>
 ### [W1](index.html#w1) Reading only
 
-Eidos can run stand-alone on a single computer independently of the other WM components.  In this case input files are most likely plain text documents (rather than the CDRs of W3) and for output there are various choices, but the native format is [JSON-LD](https://github.com/clulab/eidos/wiki/JSON-LD).  It is assumed that the ontology is known at build time and remains constant during a run.  Given these conditions, the best entry point to use is `ExtractTxtMetaFromDirectory` and the command is
+Eidos can run stand-alone on a single computer independently of the other WM components.  In this case, input files are most likely plain text documents (rather than the CDRs of W3) and for output there are various choices, but the native format is [JSON-LD](https://github.com/clulab/eidos/wiki/JSON-LD).  It is assumed that the ontology is known at build time and remains constant during a run.  Given these conditions, the best entry point to use is `ExtractTxtMetaFromDirectory` and the command is
 ```
 $ sbt "runMain org.clulab.wm.eidos.apps.batch.ExtractTxtMetaFromDirectory <inputDir> <outputDir> <timeFile> <threadCount>"
 ```
-* The \<inputDir\> should contain some `*.txt` files.  If there is not one already, a `done` directory will be created inside the \<inputDir\>.  As the files are read, those completed will be moved to the `done` directory.  If processing should need to be stopped and later restarted, it can usually continue from where it left off.
+* The \<inputDir\> should contain some `*.txt` files.  If there is not one already, a `done` subdirectory will be created inside the \<inputDir\>.  As the files are read, those completed will be moved to `done`.  If processing should need to be stopped and later restarted, it can usually continue from where it left off.
 * Output files will be written to the \<outputDir\>.  It should be created in advance.  Output file names match their input counterparts except that the extension is changed to `.jsonld`.
 * Statistics about runtime performance will be written to the \<timeFile\>. 
 * Eidos processes documents in parallel and the number of documents is determined by the \<threadCount\>.  Depending on the computer, performance tops out at about 5 threads.  After that it is more efficient to start multiple copies of Eidos.  More threads require more memory.  It depends on document size and other factors, but one thread might work best with 12GB and five with 20GB.  One way to achieve this is to use an environment variable `_JAVA_OPTIONS=-Xmx12g`.
 
 In this situation, the ontology to be used is built into the executable as a resource by `sbt` based on an instruction in `build.sbt`
 ```
-"com.github.WorldModelers"  % "Ontologies" % "master-SNAPSHOT"
+"com.github.WorldModelers" % "Ontologies" % "master-SNAPSHOT"
 ```
-so that the [latest version](https://github.com/WorldModelers/Ontologies/blob/master/CompositionalOntology_metadata.yml) in the master branch of the [Ontologies repo](https://github.com/WorldModelers/Ontologies) is automatically included.  If this is not the desired behavior, the line can be commented out and the actual file placed in `./src/main/resources/org/clulab/wm/eidos/english/ontologies` as specified in the configuration file `eidos.conf` where it can be changed if need be.
+so that the [latest version](https://github.com/WorldModelers/Ontologies/blob/master/CompositionalOntology_metadata.yml) in the master branch of the [Ontologies repo](https://github.com/WorldModelers/Ontologies) is automatically included.  If this is not the desired behavior, the line can be commented out and the actual file placed in
+```
+./src/main/resources/org/clulab/wm/eidos/english/ontologies
+```
+as specified in the configuration file `eidos.conf` where it can be changed if need be.
 
-Finally, there are several implied prerequisites to these tasks.  [sbt](https://www.scala-sbt.org/download.html) needs to have been installed before these instructions will work.  `sbt` in turn requires `Java` which must be similarly installed.  Some of the libraries used work best with Java 8, so it is highly favored.  Eidos needs to have been downloaded, probably from [GitHub](https://github.com/clulab/eidos) with a tool like [git](https://git-scm.com/downloads) or one of its many GUIs.  The `sbt` command needs to be run in the Eidos directory.
+Finally, there are several implied prerequisites to these tasks.  [sbt](https://www.scala-sbt.org/download.html) needs to have been installed before these instructions will work.  `sbt` in turn requires `Java` which must be similarly installed.  Some of the libraries used work best with Java 8, so it is highly favored.  Eidos needs to have been downloaded, probably from [GitHub](https://github.com/clulab/eidos) with a tool like [git](https://git-scm.com/downloads) or one of its many GUIs.  The `sbt` command needs to be run in the Eidos project directory, the one with the `.git` directory.
 
 
 <a id="w2"></a>
@@ -42,7 +46,7 @@ The integration/assembly component in question is [INDRA](./indra.html#w2), whic
 
 Document management is provided by [DART](./dart.html#w3), which supplies both documents and ontologies and then accepts the output from Eidos and forwards it to INDRA.  Input documents are in CDR format, which provides metadata like document creation time and title, while the output format remains unchanged.
 
-This workflow adds three handshaking stages to the regular Eidos reading stage for a total of four.  DART provides via [Kafka](https://kafka.apache.org/) notifications of the availability of new documents and ontologies which Eidos processes with a `KafkaConsumer`.  The notifications includes details of how to download the actual documents and ontologies via a [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) interface, which Eidos accesses as a `RestConsumer`.  After the reading stage, Eidos returns results to DART via another REST interface, but this time as a `RestProducer`.
+This workflow adds three handshaking stages to the regular Eidos reading stage for a total of four.  DART provides notifications, via [Kafka](https://kafka.apache.org/) messages, of the availability of new documents and ontologies which Eidos processes with a `KafkaConsumer`.  The notifications includes details of how to download the actual documents and ontologies via a [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) interface, which Eidos accesses as a `RestConsumer`.  After the reading stage, Eidos returns results to DART via another REST interface, but this time as a `RestProducer`.
 
 DART &rarr; KafkaConsumer &rarr; RestConsumer &rarr; Eidos &rarr; RestProducer &rarr; DART
 
@@ -52,7 +56,7 @@ This pipeline is implemented as four independent, asynchronous processes, which 
 $ cd ./wmexchanger
 $ export EIDOS_PASSWORD=<EidosPassword>
 $ source ./export.sh
-$ docker-compose -f ./Docker/docker-compose-eidos2.yml
+$ docker-compose -f ./docker-compose-eidos2.yml
 ```
 * Here \<EidosPassword\> is whatever password is needed for Eidos to access the DART component.
 * The file `export.sh` can be [downloaded](https://raw.githubusercontent.com/clulab/eidos/master/wmexchanger/export.sh) or copied from this abbreviated version:
@@ -65,8 +69,9 @@ $ docker-compose -f ./Docker/docker-compose-eidos2.yml
     export ONTOLOGY_VERSION=4.0
     export EIDOS_USERNAME=eidos
     export EIDOS_BASE_DIR=../corpora/corpus
+    export KAFKA_CONSUMER_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule\ required\ username=\"$EIDOS_USERNAME\"\ password=\"$EIDOS_PASSWORD\"\;
     ```
-* The file `docker-compose-eidos2.yml` can similarly be [downloaded](https://raw.githubusercontent.com/clulab/eidos/master/wmexchanger/Docker/docker-compose-eidos2.yml) or copied.  Values could in fact be entered into this file rather than being transferred from `export.sh` via environment variables if that is simpler.
+* The file `docker-compose-eidos2.yml` can similarly be [downloaded](https://raw.githubusercontent.com/clulab/eidos/master/wmexchanger/Docker/docker-compose-eidos2.yml) or copied.  Values may in fact be entered into this file rather than being transferred from `export.sh` via environment variables if that is simpler.
     ```yaml
     version: '3.4'
     services:
@@ -97,7 +102,7 @@ $ docker-compose -f ./Docker/docker-compose-eidos2.yml
       readers-net:
     ```
 
-The image, [clulab/eidos-dart]() has been uploaded to `dockerhub` and should be downloaded by `docker-compose`.  It can be customized and rebuilt locally with any necessary changes.  The current image was build with these [instructions](https://github.com/clulab/eidos/tree/master/wmexchanger/Docker):
+The image, [clulab/eidos-dart](), has been uploaded to `dockerhub` and should be automatically accessible to `docker-compose`.  It can be customized and rebuilt locally with any necessary changes.  The current image was build with these [instructions](https://github.com/clulab/eidos/tree/master/wmexchanger/Docker):
 
 ```shell
 $ sbt "project wmexchanger" "dist"
@@ -108,7 +113,7 @@ $ cd ../..
 $ docker build -f ./Docker/DockerfileLoopDist2 -t clulab/eidos-dart .
 ```
 
-Again these instructions have made assumptions about pre-installed tools.  In order to run the image, only [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) need to have been installed.  To build the image, one needs [sbt](https://www.scala-sbt.org/download.html), `Java`, and `unzip`. and then Eidos needs to have been downloaded, probably from [GitHub](https://github.com/clulab/eidos) with a tool like [git](https://git-scm.com/downloads) or one of its many GUIs.  Command sequences begin from the main Eidos project directory.
+Again these instructions have made assumptions about pre-installed tools.  In order to run the image, only [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) need to have been installed.  To build the image, one needs [sbt](https://www.scala-sbt.org/download.html), `Java`, and `unzip`, and then Eidos needs to have been downloaded, probably from [GitHub](https://github.com/clulab/eidos) with a tool like [git](https://git-scm.com/downloads) or one of its many GUIs.  Command sequences begin from the main Eidos project directory.
 
 
 <a id="w4"></a>
@@ -121,4 +126,4 @@ For Eidos, this workflow is the same as W3.  The HMI component is provided by [C
 <a id="w5"></a>
 ### [W5](index.html#w5) Document management + reading + integration/assembly + HMI + BYOD
 
-Again, this scenario is the same as W3 for Eidos.  Documents for the Bring Your Own Document (BYOD) scenario are conveyed to Eidos via DART in the same way that other documents are.  Eidos receives notifications that new documents are available and should be read and grounded to particular ontologies and does so.
+Again, this scenario is the same as W3 for Eidos.  Documents for the Bring Your Own Document (BYOD) scenario are conveyed to Eidos via DART in the same way that other documents are.  Eidos receives notifications that new documents are available and should be read and grounded to particular ontologies and then does so.
