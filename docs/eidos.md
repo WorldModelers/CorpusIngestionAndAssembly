@@ -119,11 +119,11 @@ Again these instructions have made assumptions about pre-installed tools.  In or
 <a id="w4"></a>
 ### [W4](index.html#w4) Document management + reading + integration/assembly + HMI
 
-For Eidos, this workflow is the same as W3.  The HMI component is provided by [CauseMos]([INDRA](./causemos.html#w4)) which has facilities for modifying ontologies.  As a result, more requests for "regrounding" of documents can be expected.  Components in the Eidos pipeline of W3 cache intermediate results, particularly the "reading" of a document, and can reuse them when an ontology changes.  The reader here can either read or retrieve the cached reading and forward it to the grounder which will take a new ontology into account.
+For Eidos, this workflow is the same as W3.  The HMI (human machine interface) component is provided by [CauseMos]([INDRA](./causemos.html#w4)) which has facilities for modifying ontologies.  As a result, more requests for "regrounding" of documents can be expected.  Components in the Eidos pipeline of W3 cache intermediate results, particularly the "reading" of a document, and can reuse them when an ontology changes.  The reader either reads the document or retrieves the cached reading and forwards it to the grounder which will take the new ontology into account.
 
 ... &rarr; Eidos (&rarr; reader &rarr; grounder) &rarr; ...
 
 <a id="w5"></a>
 ### [W5](index.html#w5) Document management + reading + integration/assembly + HMI + BYOD
 
-Again, this scenario is the same as W3 for Eidos.  Documents for the Bring Your Own Document (BYOD) scenario are conveyed to Eidos via DART in the same way that other documents are.  Eidos receives notifications that new documents are available and should be read and grounded to particular ontologies and then does so.
+Again, this scenario is the same as W3 for Eidos.  Documents for the Bring Your Own Document (BYOD) scenario are conveyed to Eidos via DART in the same way that other documents are.  Eidos receives notifications that new documents are available and should be read and grounded to particular ontologies, and then it does so.
