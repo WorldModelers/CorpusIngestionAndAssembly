@@ -107,7 +107,7 @@ Once an acceptable ontology is loaded in the editor, the user can publish it to 
 3. Click "Publish staged"
 
 <p align="center">
-  <img src="images/dart/ontology-publication.png">
+  <img src="images/dart/ontology-publication.png" width="470">
 </p>
 
 #### Document Submission
@@ -155,7 +155,7 @@ The panel at the top of the document upload tool allows the user to choose the t
 tenants to choose from, and set the genre and labels of the uploaded documents:
 
 <p align="center">
-  <img src="images/dart/forklift-metadata.png">
+  <img src="images/dart/forklift-metadata.png" width="470">
 </p>
 
 To select documents for upload, the user can click the button labelled "CHOOSE FILES". The user can select 
