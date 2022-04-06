@@ -54,17 +54,21 @@ This pipeline is implemented as four independent, asynchronous processes, which 
 
 ```shell
 $ cd ./wmexchanger
-$ export EIDOS_PASSWORD=<EidosPassword>
+$  export EIDOS_PASSWORD=<EidosPassword>
 $ source ./export.sh
 $ docker-compose -f ./docker-compose-eidos2.yml up
+$ cd ..
 ```
 * Here \<EidosPassword\> is whatever password is needed for Eidos to access the DART component.
-* The file `export.sh` can be [downloaded](https://raw.githubusercontent.com/clulab/eidos/master/wmexchanger/export.sh) or copied from this abbreviated version:
+* The file `export.sh` can be [downloaded](https://raw.githubusercontent.com/clulab/eidos/master/wmexchanger/export.sh) or copied from this abbreviated version and edited:
     ```shell
     export KAFKA_HOSTNAME=wm-ingest-pipeline-streaming-1.prod.dart.worldmodelers.com
     export KAFKA_CONSUMER_BOOTSTRAP_SERVERS=${KAFKA_HOSTNAME:-localhost}:9093
     export KAFKA_APP_TOPIC=dart.cdr.streaming.updates
     export REST_HOSTNAME=wm-ingest-pipeline-rest-1.prod.dart.worldmodelers.com
+    export REST_CONSUMER_DOCUMENT_SERVICE=https://${REST_HOSTNAME:-localhost}/dart/api/v1/cdrs
+    export REST_CONSUMER_ONTOLOGY_SERVICE=https://${REST_HOSTNAME:-localhost}/dart/api/v1/ontologies
+    export REST_PRODUCER_SERVICE=https://${REST_HOSTNAME:-localhost}/dart/api/v1/readers/upload
     export EIDOS_VERSION=dart
     export ONTOLOGY_VERSION=4.0
     export EIDOS_USERNAME=eidos
@@ -85,16 +89,18 @@ $ docker-compose -f ./docker-compose-eidos2.yml up
           KAFKA_APP_TOPIC: ${KAFKA_APP_TOPIC}
           KAFKA_CONSUMER_SASL_JAAS_CONFIG: ${KAFKA_CONSUMER_SASL_JAAS_CONFIG}
           KAFKA_HOSTNAME: ${KAFKA_HOSTNAME}
-          REST_HOSTNAME: ${REST_HOSTNAME}
+          REST_CONSUMER_DOCUMENT_SERVICE: ${REST_CONSUMER_DOCUMENT_SERVICE}
+          REST_CONSUMER_ONTOLOGY_SERVICE: ${REST_CONSUMER_ONTOLOGY_SERVICE}
+          REST_PRODUCER_SERVICE: ${REST_PRODUCER_SERVICE}
           ONTOLOGY_VERSION: ${ONTOLOGY_VERSION}
           EIDOS_VERSION: ${EIDOS_VERSION}
           EIDOS_USERNAME: ${EIDOS_USERNAME}
           EIDOS_PASSWORD: ${EIDOS_PASSWORD}
-          EIDOS_BASE_DIR: ${EIDOS_BASE_DIR}
-
+          EIDOS_BASE_DIR: ../corpora/corpus
+          
           EIDOS_MEMORY: -Xmx20g
           EIDOS_THREADS: 4
-          # Another possibility is "earliest".
+          # Another possibility is earliest.  Use latest for OIAD (Ontology In A Day).
           KAFKA_CONSUMER_AUTO_OFFSET_RESET: latest
         networks:
           - readers-net
@@ -102,15 +108,25 @@ $ docker-compose -f ./docker-compose-eidos2.yml up
       readers-net:
     ```
 
-The image, [clulab/eidos-dart](https://hub.docker.com/r/clulab/eidos-dart), has been uploaded to `dockerhub` and should be automatically accessible to `docker-compose`.  It can be customized and rebuilt locally with any necessary changes.  The current image was build with these [instructions](https://github.com/clulab/eidos/tree/master/wmexchanger/Docker):
+After environment variables are processed on the host machine, they are used by the entrypoint of the image, [start-loop-all2.sh](https://github.com/clulab/eidos/blob/master/wmexchanger/bin/start-loop-all2.sh).  There they are specialized for each of the four stages.  Some are added to the local environment and others are passed as command line arguments.  Those added to the environment are made available to the programs via the [application.conf](https://github.com/clulab/eidos/blob/master/wmexchanger/src/main/resources/application.conf) resource.  The entire chain is
+
+export.sh &rarr; docker-compose-eidos2.yml &rarr; start-loop-all2.sh &rarr; application.conf
+
+
+The image, [clulab/eidos-dart](https://hub.docker.com/r/clulab/eidos-dart), has been uploaded to `dockerhub` and should be automatically accessible to `docker-compose`.  It can be customized and rebuilt locally with any necessary changes.  The current image was build with these instructions in [dockerize.sh](https://github.com/clulab/eidos/tree/master/wmexchanger/dockerize.sh):
 
 ```shell
-$ sbt "project wmexchanger" "dist"
+$ sbt "project wmexchanger" clean dist
 $ cd ./wmexchanger/target/universal
-$ unzip wmexchanger*.zip
-$ mv wmexchanger*/bin wmexchanger*/lib .
+$ unzip eidos-wmexchanger*.zip
+$ mv eidos-wmexchanger*/bin eidos-wmexchanger*/lib .
+$ mkdir eidos
+$ mv ./lib/org.clulab.eidos-*.jar eidos
+$ rm eidos-wmexchanger*.zip
+$ rm -r eidos-wmexchanger* scripts
 $ cd ../..
 $ docker build -f ./Docker/DockerfileLoopDist2 -t clulab/eidos-dart .
+$ cd ..
 ```
 
 Again these instructions have made assumptions about pre-installed tools.  In order to run the image, only [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) need to have been installed.  To build the image, one needs [sbt](https://www.scala-sbt.org/download.html), `Java`, and `unzip`, and then Eidos needs to have been downloaded, probably from [GitHub](https://github.com/clulab/eidos) with a tool like [git](https://git-scm.com/downloads) or one of its many GUIs.  Command sequences begin from the main Eidos project directory.
