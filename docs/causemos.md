@@ -4,9 +4,18 @@ has_children: false
 nav_order: 2
 ---
 # CauseMos
-Causemos resources can be found under
-- TopDownModelingAndHMI: https://github.com/WorldModelers/TopDownModelingAndHMI
-- Causemos repos: https://github.com/uncharted-causemos
+Causemos ecosystem consists of Causemos web application plus a suite of services. The essential ones for handling unstructured data are:
+- [Initial setup, schemas and mappings](https://github.com/uncharted-causemos/atlas)
+- [Knowledge ingestion and incremental assembly](https://github.com/uncharted-causemos/anansi)
+- [Causemos](https://github.com/uncharted-causemos/causemos)
+
+BYOD - Requires the infrastructure parts:
+- [Causemos clustering infrastructure](https://github.com/uncharted-causemos/slow-tortoise)
+
+Recommendation/curation - optional:
+- [Recommendation service](https://github.com/uncharted-causemos/wm-curation-recommendation)
+
+More comprehensive Causemos documentations can be in [TopDownModelingAndHMI](https://github.com/WorldModelers/TopDownModelingAndHMI)
 
 ## Workflows
 
