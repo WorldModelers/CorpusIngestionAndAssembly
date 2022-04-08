@@ -93,11 +93,16 @@ In this workflow, it is assumed that both INDRA and DART are running as web serv
 BYOD + incremental assembly processing takes place outside of Causemos app due to heavy data processing and higher latency. 
 This process uses the Prefect infrastructure for task scheduling and runs the `incremental_pipeline.py` script in the anansi project
 
-For setting up Prefect infrastructure, see example instructions [here](https://github.com/uncharted-causemos/slow-tortoise/blob/master/infra/prefect/setup.md)
+For full instructions please see READMEs for [incremental pipeline](https://github.com/uncharted-causemos/anansi) and [prefect setup](https://github.com/uncharted-causemos/slow-tortoise/blob/master/infra/prefect/setup.md).
 
-To create an env
+
+For setting up Prefect infrastructure
+- Instructions [here](https://github.com/uncharted-causemos/slow-tortoise/blob/master/infra/prefect/setup.md)
+
+
+To create a python-env
 - Ssh to Prefect-server
-- conda create -n prefect-seq -c conda-forge "python>=3.8.0" prefect "elasticsearch==7.11.0" "boto3==1.17.18" "smart_open==5.0.0" python-dateutil requests
+- Run `conda create -n prefect-seq -c conda-forge "python>=3.8.0" prefect "elasticsearch==7.11.0" "boto3==1.17.18" "smart_open==5.0.0" python-dateutil requests`
 
 
 You also need a env/config file on the prefect server, with connection credentials to DART, INDRA, and others
@@ -125,6 +130,7 @@ To setup Prefect agent
 - Stop Prefect local-agent
 - Source env: `source <env/config file>`
 - Restart local-agent: `PREFECT__ENGINE__EXECUTOR__DEFAULT_CLASS="prefect.executors.LocalExecutor" PYTHONPATH="${PYTHONPATH}:<path_to_anansi_src>" prefect agent local start --api "http://<Prefect-server>:4200/graphql" --label "non-dask"`
+
 
 To register `incremental_pipeline.py`:
 - Ssh to Prefect-server
