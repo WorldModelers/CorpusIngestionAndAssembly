@@ -5,6 +5,14 @@ nav_order: 6
 ---
 # INDRA
 
+INDRA World is a knowledge assembly system that ingests causal relations
+extracted by one or more reading systems from documents, captures these in
+a standardized representation, and runs an assembly pipeline to recognize full
+and partial overlaps between relations, filter according to various criteria,
+and assess belief given the overall support for each relation.
+
+The INDRA World documentation is available [here](https://indra-world.readthedocs.io/en/latest/).
+
 ## Workflows
 
 <a id="w2"></a>
@@ -79,12 +87,12 @@ d6c90753-fe23-43c1-9457-8518b3eaeb65.jsonld
 In this workflow, the ontology is also registered in DART and can be specified
 simply through its ID using the `--ontology-id` argument.
 
-The output folder for INDRA is specified as described in [W2](index.html#w2).
+The output folder for INDRA is specified as described in [W2](indra.html#w2).
 
 <a id="w4"></a>
 ### [W4](index.html#w4) Document management + reading + integration/assembly + HMI
 
-This workflow is different from [W3](index.html#w3) only in that we need to
+This workflow is different from [W3](indra.html#w3) only in that we need to
 make sure the INDRA World CLI produces its output in an appropriate folder structure and
 output files compatible with Causemos. To achieve this, in addition to the 
 `--output-folder` argument, we need to supply the `--causemos-metadata CAUSEMOS_METADATA`
@@ -96,9 +104,9 @@ The structure of this JSON file follows the `metadata.json` entry described
 <a id="w5"></a>
 ### [W5](index.html#w5) Document management + reading + integration/assembly + HMI + BYOD
 
-This workflow is meaningfully different from W2-5 in that INDRA World here has
+This workflow is meaningfully different from W2-4 in that INDRA World here has
 to be running as a service to support uploading documents in Causemos
 and performing incremental assembly with respect to an existing Causemos
 project based on reader output for the new documents.
 
-To run the INDRA World service, follow the instructions [here](https://github.com/indralab/indra_world/tree/master/docker#dockerized-indra-world-service).
+To run the INDRA World service, follow the instructions [here](https://indra-world.readthedocs.io/en/latest/service.html).
