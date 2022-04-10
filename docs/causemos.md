@@ -4,13 +4,13 @@ has_children: false
 nav_order: 2
 ---
 # Causemos
-Causemos is the main HMI for the World Modelers program, built and maintined by Uncharted Software.
-It is an ecosystem consists of Causemos web application plus a suite of services and utilities. The essential ones for handling unstructured data are:
+Causemos is the main HMI for the World Modelers program, built and maintained by Uncharted Software.
+It is an ecosystem that consists of Causemos web application plus a suite of services and utilities. The essential ones for handling unstructured data are:
 - Atlas [Initial setup, schemas and mappings](https://github.com/uncharted-causemos/atlas)
 - Anansi [Knowledge ingestion and incremental assembly](https://github.com/uncharted-causemos/anansi)
 - Causemos [Causemos web app](https://github.com/uncharted-causemos/causemos)
 
-BYOD - Requires the infrastructure parts:
+BYOD (Bring Your Own Documents, for workflow W5) - Requires the infrastructure parts:
 - [Causemos clustering infrastructure](https://github.com/uncharted-causemos/slow-tortoise)
 
 Recommendation/curation - optional:
@@ -23,10 +23,10 @@ For running and using Causemos, the documentation can be found in [TopDownModeli
 <a id="w4"></a>
 ### [W4](index.html#w4) Document management + reading + integration/assembly + HMI
 
-In this workflow, Causemos ingests, combines and enriches INDRA statements dataset and DART CDR dataset to create a new Knowledge Base dataset
+In this workflow, Causemos ingests, combines and enriches an INDRA statements dataset and a DART CDR dataset to create a new Knowledge Base dataset.
 
 
-#### Iniital setup
+#### Initial setup
 Ensure you have ElasticSearch setup and have the mappings properly as per [atlas](https://github.com/uncharted-causemos/atlas). 
 
 Install mappings.
@@ -37,22 +37,22 @@ ES=<host:port> python es_mapper.py
 
 
 #### Running data ingestion
-Perfrom a one-time data load of gelocation references, this upsert into a `geo` index. Per documentation in the script, you will need to download and extract from:
+Perform a one-time data load of gelocation references, this upserts into a `geo` index. Per the documentation in the script, you will need to download and extract from:
 
 ```
 http://download.geonames.org/export/dump/allCountries.zip
 http://clulab.cs.arizona.edu/models/gadm_woredas.txt
 ```
 
-Once extracted
+Once extracted, run
 
 ```
 ES=<es_url> ES_USER=<user> ES_PASSWORD=<password> python geo_loader.py
 ```
 
-Assume you have INDRA and DART datasets n the file system, the ingestion process can be kicked off with the following snippet.
+Assume you have INDRA and DART datasets in the file system, the ingestion process can be kicked off with the following snippet.
 
-Note: For all intent and purposes here, SOURCE and TARGET should have the same values.
+Note: For all intents and purposes here, SOURCE and TARGET should have the same values.
 
 Note: DART_DATA is expected to be in JSONL format, one CDR per line.
 
@@ -70,7 +70,7 @@ INDRA_DATASET=<path_to_indra_directory> \
 python src/knowledge_pipeline.py
 ```
 
-Once done, build and start the Causemos application. You will find the new Knowledge Base under "New Analysis Projec", the Knowledge Base
+Once done, build and start the Causemos application. You will find the new Knowledge Base under "New Analysis Project", the Knowledge Base
 will appear with the name given by INDRA's metadata.
 
 
@@ -90,8 +90,8 @@ In this workflow, it is assumed that both INDRA and DART are running as web serv
 
 
 #### Iniital setup
-BYOD + incremental assembly processing takes place outside of Causemos app due to heavy data processing and higher latency. 
-This process uses the Prefect infrastructure for task scheduling and runs the `incremental_pipeline.py` script in the anansi project
+BYOD + incremental assembly processing takes place outside of the Causemos app due to heavy data processing and higher latency. 
+This process uses the Prefect infrastructure for task scheduling and runs the `incremental_pipeline.py` script in the `anansi` project
 
 For full instructions please see READMEs for [incremental pipeline](https://github.com/uncharted-causemos/anansi) and [prefect setup](https://github.com/uncharted-causemos/slow-tortoise/blob/master/infra/prefect/setup.md).
 
@@ -105,7 +105,7 @@ To create a python-env
 - Run `conda create -n prefect-seq -c conda-forge "python>=3.8.0" prefect "elasticsearch==7.11.0" "boto3==1.17.18" "smart_open==5.0.0" python-dateutil requests`
 
 
-You also need a env/config file on the prefect server, with connection credentials to DART, INDRA, and others
+You also need an env/config file on the prefect server, with connection credentials to DART, INDRA, and others
 
 ```
 export SOURCE_ES=
@@ -137,11 +137,11 @@ To register `incremental_pipeline.py`:
 - Set the "shouldRegister" flag to True in the python file
 - Activate the env `conda activate prefect-seq`
 - Re(register) `python incremental_pipeline.py`
- 
+
 
 #### Running Causemos with BYOD
 BYOD is an optional feature in Causemos that integrates with INDRA and DART services. To
-eanble this feature Causemos sever needs to start with the "dart" command line option, this will enable the periodic
+enable this feature, the  Causemos sever needs to start with the "dart" command line option, this will enable the periodic
 synchronizations against DART and INDRA.
 
 ```
@@ -149,6 +149,6 @@ synchronizations against DART and INDRA.
 yarn start-server --schedules dart
 ```
 
-When a document is uploaded through Causemos, the request is sent to DART. Then behind the scenes Causeos server will poll DART
-to see what new reader output are available on the Kafka queues, cross-reference them against Causemos internal document upload tracker,
-and then send the valid entries to INDRA to do incremental assembly. 
+When a document is uploaded through Causemos, the request is sent to DART. Then behind the scenes Causemos server will poll DART
+to see what new reader outputs are available on the Kafka queues, cross-reference them against the Causemos internal document upload tracker,
+and then send the valid entries to INDRA to do incremental assembly.
