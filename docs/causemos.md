@@ -1,9 +1,9 @@
 ---
-title: CauseMos
+title: Causemos
 has_children: false
 nav_order: 2
 ---
-# CauseMos
+# Causemos
 Causemos is the main HMI for the World Modelers program, built and maintined by Uncharted Software.
 It is an ecosystem consists of Causemos web application plus a suite of services and utilities. The essential ones for handling unstructured data are:
 - Atlas [Initial setup, schemas and mappings](https://github.com/uncharted-causemos/atlas)
