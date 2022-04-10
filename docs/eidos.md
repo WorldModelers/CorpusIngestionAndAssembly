@@ -135,7 +135,7 @@ Again these instructions have made assumptions about pre-installed tools.  In or
 <a id="w4"></a>
 ### [W4](index.html#w4) Document management + reading + integration/assembly + HMI
 
-For Eidos, this workflow is the same as W3.  The HMI (human machine interface) component is provided by [CauseMos]([INDRA](./causemos.html#w4)) which has facilities for modifying ontologies.  As a result, more requests for "regrounding" of documents can be expected.  Components in the Eidos pipeline of W3 cache intermediate results, particularly the "reading" of a document, and can reuse them when an ontology changes.  The reader either reads the document or retrieves the cached reading and forwards it to the grounder which will take the new ontology into account.
+For Eidos, this workflow is the same as W3.  The HMI (human machine interface) component is provided by [Causemos]([INDRA](./causemos.html#w4)) which has facilities for modifying ontologies.  As a result, more requests for "regrounding" of documents can be expected.  Components in the Eidos pipeline of W3 cache intermediate results, particularly the "reading" of a document, and can reuse them when an ontology changes.  The reader either reads the document or retrieves the cached reading and forwards it to the grounder which will take the new ontology into account.
 
 ... &rarr; Eidos (&rarr; reader &rarr; grounder) &rarr; ...
 

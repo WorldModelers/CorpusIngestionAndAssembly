@@ -41,13 +41,13 @@ Systems used:
 
 <a id="w4"></a>
 ### W4. Document management + reading + integration/assembly + HMI
-In this usage mode the user goes beyond W2 or W3 by loading INDRA outputs into CauseMos to explore, curate, and derive models from the assembled causal information. However, in this usage mode, the user is not expecting a service architecture to support incremental reading/assembly during runtime. The usage of DART is technically not required for W4 but it allows linking back to documents and examining their metadata which is advantageous. This is like a one-time run of W2/W3 and then loading results into the HMI as a “static” corpus. So the focus here is on the HMI irrespective of the pipeline feeding into it.
+In this usage mode the user goes beyond W2 or W3 by loading INDRA outputs into Causemos to explore, curate, and derive models from the assembled causal information. However, in this usage mode, the user is not expecting a service architecture to support incremental reading/assembly during runtime. The usage of DART is technically not required for W4 but it allows linking back to documents and examining their metadata which is advantageous. This is like a one-time run of W2/W3 and then loading results into the HMI as a “static” corpus. So the focus here is on the HMI irrespective of the pipeline feeding into it.
 
 Systems used:
   * Document management ([DART](dart.html#w4))
   * Readers ([Eidos](eidos.html#w4), [HUME](hume.html#w4), [Sofia](sofia.html#w4))
   * Integration/assembly ([INDRA](indra.html#w4))
-  * HMI ([CauseMos](causemos.html#w4))
+  * HMI ([Causemos](causemos.html#w4))
 
 <a id="w5"></a>
 ### W5. Document management + reading + integration/assembly + HMI + BYOD
@@ -57,7 +57,7 @@ Systems used:
   * Document management ([DART](dar.html#w5))
   * Readers ([Eidos](eidos.html#w5), [HUME](hume.html#w5), [Sofia](sofia.html#w5))
   * Integration/assembly ([INDRA](indra.html#w5))
-  * HMI ([CauseMos](causemos.html#w5))
+  * HMI ([Causemos](causemos.html#w5))
 
 ## Documentation by Component
 
@@ -89,6 +89,6 @@ Systems used:
     Workflows: ([W3](dart.html#w3), [W4](dart.html#w4), [W5](dart.html#w5))
 
 * HMI (Human-Machine Interface)
-  * [CauseMos](causemos.html)
+  * [Causemos](causemos.html)
   
     Workflows: ([W4](causemos.html#w4), [W5](causemos.html#w5))

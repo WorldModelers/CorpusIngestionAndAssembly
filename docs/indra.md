@@ -5,6 +5,14 @@ nav_order: 6
 ---
 # INDRA
 
+INDRA World is a knowledge assembly system that ingests causal relations
+extracted by one or more reading systems from documents, captures these in
+a standardized representation, and runs an assembly pipeline to recognize full
+and partial overlaps between relations, filter according to various criteria,
+and assess belief given the overall support for each relation.
+
+The INDRA World documentation is available [here](https://indra-world.readthedocs.io/en/latest/).
+
 ## Workflows
 
 <a id="w2"></a>
@@ -49,7 +57,12 @@ arguments, see the CLI documentation.
 In this workflow, INDRA World has access to DART, which keeps track of and provides
 access to documents, reader outputs, and ontologies through a standardized
 API. The [INDRA World CLI](https://github.com/indralab/indra_world#command-line-interface) can be parameterized to retrieve reader outputs as well as
-an ontology through the DART API, as follows.
+an ontology through the DART API. An example call to the INDRA World CLI
+is as follows:
+
+```
+indra_world --reader-output-dart-query READER_OUTPUT_DART_QUERY --ontology-id ONTOLOGY_ID --output-folder OUTPUT_FOLDER
+```
 
 The argument `--reader-output-dart-query READER_OUTPUT_DART_QUERY` is
 a path to a JSON file in which the parameters for querying DART are
@@ -79,26 +92,38 @@ d6c90753-fe23-43c1-9457-8518b3eaeb65.jsonld
 In this workflow, the ontology is also registered in DART and can be specified
 simply through its ID using the `--ontology-id` argument.
 
-The output folder for INDRA is specified as described in [W2](index.html#w2).
+The output folder for INDRA is specified as using `--output-folder`, as
+described in [W2](indra.html#w2).
 
 <a id="w4"></a>
 ### [W4](index.html#w4) Document management + reading + integration/assembly + HMI
 
-This workflow is different from [W3](index.html#w3) only in that we need to
-make sure the INDRA World CLI produces its output in an appropriate folder structure and
-output files compatible with Causemos. To achieve this, in addition to the 
+This workflow is different from [W3](indra.html#w3) only in that we need to
+make sure the INDRA World CLI produces its output in an appropriate folder structure,
+wiuth output files compatible with Causemos. To achieve this, in addition to the 
 `--output-folder` argument, we need to supply the `--causemos-metadata CAUSEMOS_METADATA`
 argument. Here, `CAUSEMOS_METADATA` is the path to a JSON file containing
 metadata that Causemos uses to identify and describe the assembled result.
 The structure of this JSON file follows the `metadata.json` entry described
 [here](https://indra-world.readthedocs.io/en/latest/service.html#structure-of-each-corpus).
 
+An example CLI call for this workflow is as follows:
+```
+indra_world --reader-output-dart-query READER_OUTPUT_DART_QUERY --ontology-id ONTOLOGY_ID --output-folder OUTPUT_FOLDER --causemos-metadata CAUSEMOS_METADATA
+
 <a id="w5"></a>
 ### [W5](index.html#w5) Document management + reading + integration/assembly + HMI + BYOD
 
-This workflow is meaningfully different from W2-5 in that INDRA World here has
+This workflow is meaningfully different from W2-4 in that INDRA World here has
 to be running as a service to support uploading documents in Causemos
 and performing incremental assembly with respect to an existing Causemos
 project based on reader output for the new documents.
 
-To run the INDRA World service, follow the instructions [here](https://github.com/indralab/indra_world/tree/master/docker#dockerized-indra-world-service).
+To run the INDRA World service, follow the instructions [here](https://indra-world.readthedocs.io/en/latest/service.html).
+
+Once the service is running,
+one can build an assembled knowledge base using INDRA World based on
+reader outputs captured by DART using (1) INDRA World's Python API by
+using the [Corpus manager](https://indra-world.readthedocs.io/en/latest/modules/service/corpus_manager/index.html), or (2) using the INDRA World assembly
+dashboard web UI which runs at http://localhost:8001/dashboard under
+default settings.
