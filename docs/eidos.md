@@ -14,11 +14,17 @@ In general one should keep in mind that Eidos is written in Scala and will run w
 <a id="w1"></a>
 ### [W1](index.html#w1) Reading only
 
-Eidos can run stand-alone on a single computer independently of the other WM components.  In this case, input files are most likely plain text documents (rather than the CDRs of W3) and for output there are various choices, but the native format is [JSON-LD](https://github.com/clulab/eidos/wiki/JSON-LD).  It is assumed that the ontology is known at build time and remains constant during a run.  Given these conditions, the best entry point to use is `ExtractTxtMetaFromDirectory` and the command is
+Eidos can run stand-alone on a single computer independently of the other WM components.  In this case, input files are most likely plain text documents (or potentially "CDRs") and for output there are various choices, but the native format is [JSON-LD](https://github.com/clulab/eidos/wiki/JSON-LD).  It is assumed that the ontology is known at build time and remains constant during a run.  Given these conditions, the best entry point to use is `ExtractTxtMetaFromDirectory` and the command is
 ```
 $ sbt "runMain org.clulab.wm.eidos.apps.batch.ExtractTxtMetaFromDirectory <inputDir> <outputDir> <timeFile> <threadCount>"
 ```
-* The \<inputDir\> should contain some `*.txt` files.  If there is not one already, a `done` subdirectory will be created inside the \<inputDir\>.  As the files are read, those completed will be moved to `done`.  If processing should need to be stopped and later restarted, it can usually continue from where it left off.
+
+If CDRs (JSON files of a particular format most associated with W3 and above) are available, they are preferable because they facilitate specification of document creation time.  This helps Eidos pin down relative dates in the text.  The CDRs might be found in a sample corpus or be exported from other WM tools.  The above command need only be slightly altered for CDRs:
+```
+$ sbt "runMain org.clulab.wm.eidos.apps.batch.ExtractCdrMetaFromDirectory <inputDir> <outputDir> <timeFile> <threadCount>"
+```
+
+* The \<inputDir\> should contain some `*.txt` files (or `*.json` files for CDRs).  If there is not one already, a `done` subdirectory will be created inside the \<inputDir\>.  As the files are read, those completed will be moved to `done`.  If processing should need to be stopped and later restarted, it can usually continue from where it left off.
 * Output files will be written to the \<outputDir\>.  It should be created in advance.  Output file names match their input counterparts except that the extension is changed to `.jsonld`.
 * Statistics about runtime performance will be written to the \<timeFile\>. 
 * Eidos processes documents in parallel and the number of documents is determined by the \<threadCount\>.  Depending on the computer, performance tops out at about 5 threads.  After that it is more efficient to start multiple copies of Eidos.  More threads require more memory.  It depends on document size and other factors, but one thread might work best with 12GB and five with 20GB.  One way to achieve this is to use an environment variable `_JAVA_OPTIONS=-Xmx12g`.
@@ -33,7 +39,7 @@ so that the [latest version](https://github.com/WorldModelers/Ontologies/blob/ma
 ```
 as specified in the configuration file `eidos.conf` where it can be changed if need be.
 
-Finally, there are several implied prerequisites to these tasks.  [sbt](https://www.scala-sbt.org/download.html) needs to have been installed before these instructions will work.  `sbt` in turn requires `Java` which must be similarly installed.  Some of the libraries used work best with Java 8, so it is highly favored.  Eidos needs to have been downloaded, probably from [GitHub](https://github.com/clulab/eidos) with a tool like [git](https://git-scm.com/downloads) or one of its many GUIs.  The `sbt` command needs to be run in the Eidos project directory, the one with the `.git` directory.
+Finally, there are several implied prerequisites to these tasks.  [sbt](https://www.scala-sbt.org/download.html) needs to have been installed before these instructions will work.  `sbt` in turn requires `Java` which must be similarly installed.  Some of the libraries used work best with Java 8, so it is highly favored.  Eidos needs to have been downloaded, probably from [GitHub](https://github.com/clulab/eidos) with a tool like [git](https://git-scm.com/downloads) or one of its many GUIs.  The `sbt` command needs to be run in the Eidos project directory, the one with the `.git` subdirectory.
 
 
 <a id="w2"></a>
