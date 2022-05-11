@@ -14,7 +14,7 @@ In general one should keep in mind that Eidos is written in Scala and will run w
 <a id="w1"></a>
 ### [W1](index.html#w1) Reading only
 
-Eidos can run stand-alone on a single computer independently of the other WM components.  In this case, input files are most likely plain text documents (or potentially "CDRs") and for output there are various choices, but the native format is [JSON-LD](https://github.com/clulab/eidos/wiki/JSON-LD).  It is assumed that the ontology is known at build time and remains constant during a run.  Given these conditions, the best entry point to use is `ExtractTxtMetaFromDirectory` and the command is
+Eidos can run stand-alone on a single computer independently of the other WM components.  In this case, input files are most likely plain text documents (or potentially CDRs for Common Data Representation) and for output there are various choices, but the native format is [JSON-LD](https://github.com/clulab/eidos/wiki/JSON-LD).  It is assumed that the ontology is known at build time and remains constant during a run.  Given these conditions, the best entry point to use is `ExtractTxtMetaFromDirectory` and the command is
 ```
 $ sbt "runMain org.clulab.wm.eidos.apps.batch.ExtractTxtMetaFromDirectory <inputDir> <outputDir> <timeFile> <threadCount>"
 ```
