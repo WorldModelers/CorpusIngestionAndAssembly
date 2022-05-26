@@ -14,7 +14,7 @@ has_toc: false
 
 Key features of Eidos include the following:
 
-1. It reads for causation in the open-domain in which "Anything can cause anything", including things you or it have never heard of.
+1. It reads for causation in the open-domain in which "Anything can cause anything", including things you or it has never heard of.
 2. It is rule-based, using the [Odin](https://clulab.github.io/processors/odin.html) information extraction framework, making it easy to interpret, modify, and maintain.
 3. Its reading is decoupled from ontologies.  After reading, it can ground to any number of them.
 4. It uses a top-down approach, keeping close to the text:
