@@ -1,7 +1,7 @@
 ---
 title: Eidos Workflows
 has_children: false
-parent: eidos
+parent: Eidos
 nav_order: 1
 ---
 # Eidos Workflows
