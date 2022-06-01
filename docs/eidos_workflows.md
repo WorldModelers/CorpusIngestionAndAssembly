@@ -9,21 +9,21 @@ nav_order: 1
 ## Contents
 * [Integrated system](#integrated-system)
 * [Reading and assembly](#reading-and-assembly)
-* [Reading only](#reading_only)
+* [Reading only](#reading-only)
 
-[Eidos](https://github.com/clulab/eidos) is typically incorporated into the workflows documented below.  Especially for the latter workflows in which more direct access to Eidos is provided or when considering additional workflows, it may be helpful to keep in mind that Eidos is written in Scala and will run with the Scala Build Tool, [sbt](https://www.scala-sbt.org/), with the [Scala interpreter](https://www.scala-lang.org/download/install.html), or directly on the `Java` virtual machine (JVM), depending on how it has been packaged.  There is also a REST API, and it can be containerized.  For the the integrated system workflow, a [Docker](https://www.docker.com/) container running several instances of `Java` has been chosen as most appropriate for deployment.  The image for the container can be downloaded from [Docker hub](https://hub.docker.com/r/clulab/eidos-dart) or built locally with `sbt`.  For the reading and assembly and reading only workflows, `sbt` has been chosen as the most appropriate tool.  The [visualizer](http://eidos.cs.arizona.edu:9000/) makes use of the REST interface.
+[Eidos](https://github.com/clulab/eidos) is typically incorporated into the workflows documented below.  Especially for the latter workflows in which more direct access to Eidos is provided or when considering additional workflows, it may be helpful to keep in mind that Eidos is written in Scala and will run with the Scala Build Tool, [sbt](https://www.scala-sbt.org/), with the [Scala interpreter](https://www.scala-lang.org/download/install.html), or directly on the `Java` virtual machine (JVM), depending on how it has been packaged.  There is also a REST API, and it can be containerized.  For the the integrated system workflow, a [Docker](https://www.docker.com/) image that runs several instances of `Java` has been chosen as most appropriate for deployment.  It can be downloaded from [Docker hub](https://hub.docker.com/r/clulab/eidos-dart) or built locally with `sbt`.  For the reading and assembly and reading only workflows, `sbt` has been chosen as the most appropriate tool.  The [visualizer](http://eidos.cs.arizona.edu:9000/), not part of any workflow here,  makes use of the REST interface.
 
 
 <a id="integrated-system"></a>
-### [Integrated system](TODO)
+## [Integrated system](TODO)
 
-Eidos is built into the integrated system by virtue of it being incorporated into CREATE, which organizes numerous docker images, including [one containing Eidos](https://hub.docker.com/r/clulab/eidos-dart), into a complete "ecosystem".  Eidos should therefore be pre-configured for this workflow.  How that came about is detailed further below.  To understand the configuration, one should first be familiar with how Eidos interacts with DART and CauseMos, the two other components of the integrated system.
+Eidos is built into the integrated system by virtue of it being incorporated into CREATE, which organizes numerous docker images, including [one containing Eidos](https://hub.docker.com/r/clulab/eidos-dart), into a complete "ecosystem".  Eidos should therefore be pre-configured for this workflow.  How that came about is detailed further below.  To understand the configuration, one should first be familiar with how Eidos interacts with DART and Causemos, the two other components of the integrated system.
 
 Document management for this workflow is provided by [DART](./dart.html#w3), which supplies both documents and ontologies to Eidos and then accepts output from Eidos and forwards it to INDRA for assembly.  Input documents are in CDR (Common Data Representation) format, which provides metadata such as document creation time and title, while the [JSON-LD](https://github.com/clulab/eidos/wiki/JSON-LD) output format is unchanged from other workflows.  Three handshaking stages are added to the regular Eidos reading stage.  DART provides notifications, via [Kafka](https://kafka.apache.org/) messages, of the availability of new documents and ontologies which Eidos processes with a `KafkaConsumer`.  The notifications includes details of how to download the actual documents and ontologies via a [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) interface, which Eidos accesses as a `RestConsumer`.  After the reading stage, Eidos returns results to DART via another REST interface, but this time as a `RestProducer`.
 
 DART &rarr; KafkaConsumer &rarr; RestConsumer &rarr; Eidos &rarr; RestProducer &rarr; DART
 
-The HMI (human machine interface) component of this workflow is provided by [Causemos](TODO), which has facilities for modifying ontologies.  As a result, requests for "regrounding" of documents are part of this workflow.  New ontologies are registered with DART and then forwarded to readers through the pipeline.  Components internal to Eidos cache intermediate results, particularly the "reading" of a document, and can reuse them when an ontology changes.  The reader either reads the document or retrieves the cached reading and submits it to the grounder which takes the new ontology into account.
+The HMI (human machine interface) component of this workflow is provided by [Causemos](TODO), which has facilities for modifying ontologies.  As a result, requests for "regrounding" of documents are part of this workflow.  New ontologies are registered with DART and then forwarded to readers through the pipeline.  Components internal to Eidos cache intermediate results, particularly the "reading" of a document, and reuse them when an ontology changes.  The reader either reads the document or retrieves the cached reading and submits it to the grounder which takes the new ontology into account.
 
 DART &rarr; KafkaConsumer &rarr; RestConsumer &rarr; Eidos (&rarr; reader &rarr; grounder) &rarr; RestProducer &rarr; DART
 
@@ -85,7 +85,7 @@ $ cd ..
       readers-net:
     ```
 
-After environment variables are processed on the host machine, they are used by the entrypoint of the image, [start-loop-all2.sh](https://github.com/clulab/eidos/blob/master/wmexchanger/bin/start-loop-all2.sh).  There they are specialized for each of the four stages.  Some are added to the local environment and others are passed as command line arguments.  Those added to the environment are made available to the programs via the [application.conf](https://github.com/clulab/eidos/blob/master/wmexchanger/src/main/resources/application.conf) resource.  The entire chain is
+After environment variables are processed on the host machine, they are used by the entrypoint of the running container, [start-loop-all2.sh](https://github.com/clulab/eidos/blob/master/wmexchanger/bin/start-loop-all2.sh).  There they are specialized for each of the four stages.  Some are added to the local environment and others are passed as command line arguments.  Those added to the environment are made available to the programs via the [application.conf](https://github.com/clulab/eidos/blob/master/wmexchanger/src/main/resources/application.conf) resource.  The entire chain is
 
 export.sh &rarr; docker-compose-eidos2.yml &rarr; start-loop-all2.sh &rarr; application.conf
 
@@ -106,17 +106,17 @@ $ docker build -f ./Docker/DockerfileLoopDist2 -t clulab/eidos-dart .
 $ cd ..
 ```
 
-Again, these instructions should only be necessary for a reconfiguration of Eidos within CREATE.  They include several assumptions about pre-installed tools.  In order to run the image, only [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) need to have been installed.  To build the image, one needs [sbt](https://www.scala-sbt.org/download.html), `Java`, and `unzip`, and then Eidos needs to have been downloaded, probably from [GitHub](https://github.com/clulab/eidos) with a tool like [git](https://git-scm.com/downloads) or one of its many GUIs.  Command sequences begin from the main Eidos project directory.
+As mentioned previously, these instructions should only be necessary for a reconfiguration of Eidos within CREATE.  They include several assumptions about pre-installed tools.  In order to run the image, only [Docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) need to have been installed.  To build the image, one needs [sbt](https://www.scala-sbt.org/download.html), `Java`, and `unzip`, and then Eidos needs to have been downloaded, probably from [GitHub](https://github.com/clulab/eidos) with a tool like [git](https://git-scm.com/downloads) or one of its many GUIs.  Command sequences begin from the main Eidos project directory.
 
 
 <a id="reading-and-assembly"></a>
-### [Reading and assembly](TODO)
+## [Reading and assembly](TODO)
 
 The assembly component in question is [INDRA](./indra.html#w2), which is able to be configured to read output files from Eidos on a filesystem.  Just get the files generated by the following reading only workflow to a place where INDRA can read them (via email attachments, thumb drive, FTP, Google Drive, RCP, etc.) and then configure INDRA appropriately.  It reads Eidos files in their native [JSON-LD](https://github.com/clulab/eidos/wiki/JSON-LD) format.  It will want to know which [ontology](https://github.com/WorldModelers/Ontologies) to use, so be sure to coordinate that between the two components.
 
 
 <a id="reading-only"></a>
-### [Reading only](TODO)
+## [Reading only](TODO)
 
 Eidos can run stand-alone on a single computer independently of the other World Modelers (WM) components.  In this case, the most applicable tool to use is `sbt`.  Input files are most likely plain text documents (or potentially CDRs for Common Data Representation) and for output there are various choices, but the native format is [JSON-LD](https://github.com/clulab/eidos/wiki/JSON-LD).  It is assumed that the ontology is known at build time and remains constant during a run.  Given these conditions, the best entry point to use is `ExtractTxtMetaFromDirectory` and the command is
 ```
